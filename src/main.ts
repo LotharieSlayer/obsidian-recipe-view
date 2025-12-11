@@ -62,7 +62,8 @@ export default class RecipeViewPlugin extends Plugin {
 	
 	async handleFileOpen() {
 		const leaf = this.app.workspace.getMostRecentLeaf();
-		const file = leaf?.view.file;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const file = (leaf?.view as any).file;
 		
 		// Skip handling the file change if the view was changed manually
 		if (this.manualViewChange) {
@@ -75,7 +76,7 @@ export default class RecipeViewPlugin extends Plugin {
 
 			if (fileCache?.frontmatter && fileCache.frontmatter.tags) {
 				
-				if (fileCache.frontmatter.tags && fileCache.frontmatter.tags.some(tag => tag === this.settings.tag)) {
+				if (fileCache.frontmatter.tags && fileCache.frontmatter.tags.some((tag: string) => tag === this.settings.tag)) {
 					this.setRecipeView(leaf!);
 				}
 			}
