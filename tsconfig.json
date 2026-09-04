@@ -28,5 +28,10 @@
   "include": [
     "**/*.ts",
     "**/*.svelte",
+  ],
+  "exclude": [
+    "src/browser",
+    "src/browser.ts",
+    "browser.js"
   ]
 }

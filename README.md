@@ -32,6 +32,7 @@ Store, write, and manage your recipes in as regular Obsidian notes in **portable
 - ✅ Makes ingredient lists cross-out-able
 - 📌 Lets you highlight steps to keep track of where you're up to
 - 📱 Works on phones and tablets
+- 🌐 Supports online web server export with [obsidian-webpage-export](https://github.com/LotharieSlayer/obsidian-webpage-export)
 
 **Why keep your recipes in Obsidian?**
 - 🗃 Portable and future-proof markdown

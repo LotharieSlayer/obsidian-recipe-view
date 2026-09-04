@@ -70,6 +70,12 @@ export default class RecipeViewPlugin extends Plugin {
 			this.manualViewChange = false; // Reset the flag after handling
 			return;
 		}
+
+		// Don't hijack the hidden render leaf used by obsidian-webpage-export while
+		// it is exporting pages: switching its view would break the markdown render.
+		if (document.body.classList.contains("html-export-running")) {
+			return;
+		}
 		
 		if (file instanceof TFile) {
 			const fileCache = this.app.metadataCache.getFileCache(file);

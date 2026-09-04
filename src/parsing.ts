@@ -109,6 +109,12 @@ function injectQuantities(parsedRecipe: ParsedRecipe) {
     })
 }
 
+export interface RecipeParseSettings {
+    sideColumnRegex: string;
+    treatH1AsFilename: boolean;
+    showBulletsTwoColumn: boolean;
+}
+
 export function parseRecipeMarkdown(
     plugin: RecipeViewPlugin, text: string, path: string, component: Component
 ) {
@@ -132,11 +138,27 @@ export function parseRecipeMarkdown(
 
     MarkdownRenderer.render(plugin.app, text, result.renderedMarkdownParent, path, component);
 
+    parseRenderedMarkdown(plugin.settings, result);
 
+    return result;
+}
+
+/**
+ * Take a DOM that has already had its markdown rendered (i.e. Obsidian's
+ * `MarkdownRenderer.render` output), and turn it into a `ParsedRecipe` by walking it.
+ *
+ * This is the shared traversal used both by the Obsidian view (after rendering the
+ * markdown on the fly) and by the browser export (which feeds in pre-rendered markdown).
+ * It intentionally does NOT depend on `MarkdownRenderer`, so it can run outside Obsidian.
+ */
+export function parseRenderedMarkdown(
+    settings: RecipeParseSettings,
+    result: ParsedRecipe,
+) {
     const radioName = `selectable-steps-${get(store.counter)}`;
     store.counter.update((n) => n + 1);
 
-    const sideColumnRegex = RegExp(plugin.settings.sideColumnRegex, "i");
+    const sideColumnRegex = RegExp(settings.sideColumnRegex, "i");
 
     let currentSection = 0;
     let currentColumn = "mainComponents";
@@ -162,7 +184,7 @@ export function parseRecipeMarkdown(
         if (item.nodeName.match(/H[1-6]/)) {
             const headerLevel = parseInt(item.nodeName.at(1)!);
             if (
-                plugin.settings.treatH1AsFilename &&
+                settings.treatH1AsFilename &&
                 headerLevel == 1 &&
                 result.sections[currentSection].containsHeader == false
             ) {
@@ -213,7 +235,7 @@ export function parseRecipeMarkdown(
         ) {
             result.sections[currentSection]["sideComponents"].push({
                 type: CheckableIngredientList,
-                props: { list: item, bullets: plugin.settings.showBulletsTwoColumn },
+                props: { list: item, bullets: settings.showBulletsTwoColumn },
                 origIndex: i,
             });
             continue;

@@ -1,11 +1,11 @@
 {
 	"id": "recipe-view",
 	"name": "Recipe view",
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"minAppVersion": "0.15.0",
 	"description": "View your notes as interactive recipe cards while you cook.",
-	"author": "lachholden",
-	"authorUrl": "https://github.com/lachholden",
+	"author": "LotharieSlayer",
+	"authorUrl": "https://github.com/LotharieSlayer",
 	"isDesktopOnly": false,
-	"fundingUrl": "https://ko-fi.com/lachholden"
+	"fundingUrl": "https://donate.lotharie.net"
 }
