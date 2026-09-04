@@ -51,13 +51,13 @@
 
 	.column-side {
 		flex-basis: calc(var(--file-line-width) / 2);
-		flex-grow: 0;
+		flex-grow: 1;
 		flex-shrink: 1;
 	}
 
 	.column-main {
 		flex-basis: var(--file-line-width);
-		flex-grow: 0;
+		flex-grow: 1;
 		flex-shrink: 1;
 	}
 
