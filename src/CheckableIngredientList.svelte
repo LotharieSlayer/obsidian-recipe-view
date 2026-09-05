@@ -77,11 +77,8 @@
 		margin-block: var(--list-spacing);
 	}
 
-	ul.bullets > li {
-		list-style-type: square;
-		margin-inline-start: var(--list-indent);
-	}
-
+	/* The rendered markdown always carries its own `.list-bullet` marker, so we
+	   do not draw an additional one from the `<ul>` list-style here. */
 	:global(.column-side) ul.bullets > li {
 		margin-inline-start: 0px;
 	}
