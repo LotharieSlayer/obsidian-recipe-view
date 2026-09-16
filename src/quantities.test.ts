@@ -215,6 +215,57 @@ describe('matching multiple quantities in strings', () => {
                 }
             ]);
     });
+    test('simple range', () => {
+        expect(matchQuantities("1-2 eggs"))
+            .toStrictEqual([
+                {
+                    index: 0,
+                    length: 1,
+                    value: { value: new Fraction(1, 1), format: QtyFormatType.FRACTION },
+                    unit: null
+                },
+                {
+                    index: 2,
+                    length: 1,
+                    value: { value: new Fraction(2, 1), format: QtyFormatType.FRACTION },
+                    unit: null
+                }
+            ]);
+    });
+    test('simple range with whitespace', () => {
+        expect(matchQuantities("1 - 2 eggs"))
+            .toStrictEqual([
+                {
+                    index: 0,
+                    length: 1,
+                    value: { value: new Fraction(1, 1), format: QtyFormatType.FRACTION },
+                    unit: null
+                },
+                {
+                    index: 4,
+                    length: 1,
+                    value: { value: new Fraction(2, 1), format: QtyFormatType.FRACTION },
+                    unit: null
+                }
+            ]);
+    });
+    test('simple range with unit', () => {
+        expect(matchQuantities("1-2 tbsp salt"))
+            .toStrictEqual([
+                {
+                    index: 0,
+                    length: 1,
+                    value: { value: new Fraction(1, 1), format: QtyFormatType.FRACTION },
+                    unit: null
+                },
+                {
+                    index: 2,
+                    length: 6,
+                    value: { value: new Fraction(2, 1), format: QtyFormatType.FRACTION },
+                    unit: "tbsp"
+                }
+            ]);
+    });
 });
 
 describe('formatting scaled quantities', () => {

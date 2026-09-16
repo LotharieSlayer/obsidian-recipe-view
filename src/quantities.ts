@@ -11,9 +11,10 @@ export const NUMBER_WITH_UNIT = new RegExp("(?<number>" + NUMBER.source + ")\\s*
 
 /** Matches a number at the start of a string by itself */
 export const START_NUMBER_ALONE = new RegExp("(?<startnumber>^" + NUMBER.source + ")\\b", "ig");
+export const RANGE_END_NUMBER   = new RegExp("(?<=" + NUMBER.source + "\\s*-\\s*)(?<endnumber>" + NUMBER.source + ")\\b", "ig");
 
 /** Matches either a number at the start of a string, or otherwise a number and unit */
-export const QUANTITY = new RegExp(NUMBER_WITH_UNIT.source + "|" + START_NUMBER_ALONE.source, "ig");
+export const QUANTITY = new RegExp(NUMBER_WITH_UNIT.source + "|" + START_NUMBER_ALONE.source + "|" + RANGE_END_NUMBER.source, "ig");
 
 export enum QtyFormatType {
     FRACTION,
@@ -83,7 +84,7 @@ export function matchQuantities(str: string) {
         return {
             index: match.index,
             length: match[0].length,
-            value: quantityStringsToValue(match.groups!.number || match.groups!.startnumber, match.groups!.unit),
+            value: quantityStringsToValue(match.groups!.number || match.groups!.startnumber || match.groups!.endnumber, match.groups!.unit),
             unit: match.groups!.unit || null,
         }
     });
